@@ -1,4 +1,9 @@
+// type Prettify<T> = {
+//   [K in keyof T]: T[K];
+// } & {};
 
+// ex:
+// const coolThing: Prettify<interfaceHere> = {};
 
 interface iCharacterStats {
   Strength: number,
@@ -12,15 +17,15 @@ interface iCharacterStats {
 interface iFeat {
   name: string,
   preRequisiteFeats? : iFeat[],
-  // preRequisiteStats?: characterStats
+  preRequisiteStats?: iCharacterStats;
 };
 
 type TCharName = {
   name: string
-
 }; // attempt to create a type with min and max length of characters, return an error if not met. Might need to be set on frontend, or validated in a separate function within the class however.
 
-type TGender = 'male' | 'female';
+type TGender = 'male' | 'female'; //dont hate, thats just how the game is
+type TRace = 'Aasimar' | 'Dhampir' | 'Elf' | 'Gnome' | 'Half-Elf' | 'Half-Orc' | 'Human' | 'Kitsune' | 'Tiefling';
 
 interface iCharacter extends TCharName {
   level: number,
@@ -30,8 +35,8 @@ interface iCharacter extends TCharName {
   intelligence: number,
   wisdom: number,
   charisma: number,
-  gender: TGender
-
+  gender: TGender,
+  race: TRace,
 };
 
 interface iCharacterLevel {
@@ -40,30 +45,35 @@ interface iCharacterLevel {
   feat: iFeat,
 }; // needs to be heavily expanded. Currently just a palceholder to add and map over basic feats.
 
+//PLACEHOLDER
+interface iMythicLevel {
+  stuff: string;
+};
 
 class MainCharacter implements iCharacter {
   //init
   name: string;
   level: number;
   gender: TGender;
+  race: TRace;
 
-    //Default starting values
+  //Default starting values
   strength = 10;
   dexterity = 10;
   constitution = 10;
   intelligence =10;
   wisdom = 10;
   charisma = 10;
-  
-  
 
   //map of all character levels, key is the level at which a level of that class was added.
-  levelUps = new Map<number, iCharacterLevel>()
+  levelUps = new Map<number, iCharacterLevel>();
+  mythicLevels = new Map<number, iMythicLevel>();
   
-  constructor(name:string, startingStats: iCharacterStats, gender: TGender,){
+  constructor(name:string, startingStats: iCharacterStats, gender: TGender, race: TRace,){
     this.name = name;
     this.gender = gender;
     this.level = 1;
+    this.race = race;
 
     if(this.validateStartingStats(startingStats)){
       this.strength = startingStats.Strength;
@@ -79,8 +89,13 @@ class MainCharacter implements iCharacter {
   levelUp(charLevel:number, levelUpData: iCharacterLevel){
     if(this.levelUps.has(charLevel)){
       return `Unable to level up, level ${charLevel} already exists.`;
-    }
+    };
 
+    // ADD feat selection, required, on odd levels
+
+    // 
+
+    //
     this.levelUps.set(charLevel, levelUpData); // extreme placeholder setter. Lots of validation required.
   };
 
@@ -92,7 +107,6 @@ class MainCharacter implements iCharacter {
   };
 
   addFeat(){
-
   };
 
   private validateStartingStats(startingStats: iCharacterStats){
@@ -126,8 +140,10 @@ const char = new MainCharacter('Bon Jovius',
     Wisdom: 10,
     Charisma: 12,
   },
-  'male'
+  'male',
+  'Human',
 );
+
 char.levelUp(1,{className: 'Barbarian', feat: {name:'Big shoes'}});
 char.levelUp(2,{className: 'Fighter', subclass: 'Titan Fighter', feat: {name: 'Tiny Feet'}});
 console.log(char.getLevelInfo());
