@@ -15,19 +15,23 @@ interface iFeat {
   // preRequisiteStats?: characterStats
 };
 
-interface TCharName {
+type TCharName = {
   name: string
 
 }; // attempt to create a type with min and max length of characters, return an error if not met. Might need to be set on frontend, or validated in a separate function within the class however.
 
+type TGender = 'male' | 'female';
+
 interface iCharacter extends TCharName {
   level: number,
-  Strength: number,
-  Dexterity: number,
-  Constitution: number,
-  Intelligence: number,
-  Wisdom: number,
-  Charisma: number,
+  strength: number,
+  dexterity: number,
+  constitution: number,
+  intelligence: number,
+  wisdom: number,
+  charisma: number,
+  gender: TGender
+
 };
 
 interface iCharacterLevel {
@@ -39,28 +43,37 @@ interface iCharacterLevel {
 
 class MainCharacter implements iCharacter {
   //init
-  name = 'default';
-  level = 1;
-  Strength = 10;
-  Dexterity = 10;
-  Constitution = 10;
-  Intelligence =10;
-  Wisdom = 10;
-  Charisma = 10;
+  name: string;
+  level: number;
+  gender: TGender;
+
+    //Default starting values
+  strength = 10;
+  dexterity = 10;
+  constitution = 10;
+  intelligence =10;
+  wisdom = 10;
+  charisma = 10;
+  
   
 
   //map of all character levels, key is the level at which a level of that class was added.
   levelUps = new Map<number, iCharacterLevel>()
   
-  constructor(name:string, startingStats: iCharacterStats){
+  constructor(name:string, startingStats: iCharacterStats, gender: TGender,){
     this.name = name;
+    this.gender = gender;
     this.level = 1;
-    this.Strength = startingStats.Strength;
-    this.Dexterity = startingStats.Dexterity;
-    this.Constitution = startingStats.Intelligence;
-    this.Wisdom = startingStats.Wisdom;
-    this. Charisma = startingStats.Charisma;
-    
+
+    if(this.validateStartingStats(startingStats)){
+      this.strength = startingStats.Strength;
+      this.dexterity = startingStats.Dexterity;
+      this.constitution = startingStats.Intelligence;
+      this.wisdom = startingStats.Wisdom;
+      this.charisma = startingStats.Charisma;
+    } else {
+        throw new Error('starting stats are invalid.')
+    };
   };
 
   levelUp(charLevel:number, levelUpData: iCharacterLevel){
@@ -82,16 +95,38 @@ class MainCharacter implements iCharacter {
 
   };
 
-}
+  private validateStartingStats(startingStats: iCharacterStats){
+    let validStats = true;
+    //do stuff and test
+    let totalValueOfStats = 0;
 
-const char = new MainCharacter('Bon Jovius', {
+    // Stop TS from complaining about no unused variable
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Object.entries(startingStats).map(([key, value]) => {
+      //add to total values for temp validation. to be expanded on
+      totalValueOfStats += value;
+    })
+
+    //temp validation, must be expanded
+    if(totalValueOfStats< 40){
+      validStats = false;
+    }
+
+    //return results of stats
+    return validStats;
+  };
+};
+
+const char = new MainCharacter('Bon Jovius',
+  {
     Strength: 10,
     Dexterity: 16,
     Constitution: 18,
     Intelligence: 10,
     Wisdom: 10,
     Charisma: 12,
-  }
+  },
+  'male'
 );
 char.levelUp(1,{className: 'Barbarian', feat: {name:'Big shoes'}});
 char.levelUp(2,{className: 'Fighter', subclass: 'Titan Fighter', feat: {name: 'Tiny Feet'}});
