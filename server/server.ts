@@ -17,5 +17,3 @@ const char = new MainCharacter('Bon Jovius',
 char.levelUp(1,{className: 'Barbarian', feat: {name:'Big shoes'}});
 char.levelUp(2,{className: 'Fighter', subclass: 'Titan Fighter', feat: {name: 'Tiny Feet', preRequisiteFeats:{name:'Big shoes'}}});
 console.log(char.getLevelInfo());
-
-export default MainCharacter;

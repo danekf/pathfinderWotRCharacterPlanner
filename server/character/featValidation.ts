@@ -1,4 +1,4 @@
-import { iFeat, TRace, iCharacter } from "./interfaces";
+import { iFeat, TRace } from "./interfaces";
 
 const hasPrerequisiteFeat = (characterLevelsMap: any, prerequisiteFeat: iFeat): boolean => {
   let hasPrerequisiteFeat = false;
@@ -17,24 +17,24 @@ const hasPrerequisiteFeat = (characterLevelsMap: any, prerequisiteFeat: iFeat): 
   return hasPrerequisiteFeat;
 };
 
-// const hasPrerequisiteRace = (characterLevelsMap: any, preRequisiteRace: iFeat): boolean => {
-//   let hasPrerequisite = false;
+const hasPrerequisiteRace = (featToAdd: iFeat, race: TRace ): boolean => {
+  let hasPrerequisite = false;
 
+  if(featToAdd.preRequisiteRace === race){
+    hasPrerequisite = true;
+  };
+  return hasPrerequisite;
+};
 
-//   return hasPrerequisite;
-// };
-
-export const validateFeatSelection = (characterLevelsMap: any, featToAdd: iFeat): boolean => {
+export const validateFeatSelection = (characterLevelsMap: any, featToAdd: iFeat, race: TRace): boolean => {
 
   if(featToAdd?.preRequisiteFeats){
     hasPrerequisiteFeat(characterLevelsMap, featToAdd)
   };
 
-  // racial validation
-  // if(featToAdd.preRequisiteRace){
-  //   hasPrerequisiteRace()
-
-  // }
+  if(featToAdd?.preRequisiteRace){
+    hasPrerequisiteRace(featToAdd, race)
+  };
 
   //if no issues, give the OK
   return true

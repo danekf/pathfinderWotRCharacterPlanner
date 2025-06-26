@@ -28,7 +28,7 @@ export class MainCharacter implements iCharacter {
 
   //map of all character levels, key is the level at which a level of that class was added.
   characterLevelUps = new Map<number, iCharacterLevel>();
-  // mythicLevels = new Map<number, iMythicLevel>();
+  mythicLevels = new Map<number, iMythicLevel>();
   
   constructor(name:string, startingStats: iCharacterStats, gender: TGender, race: TRace,){
     this.name = name;
@@ -52,26 +52,18 @@ export class MainCharacter implements iCharacter {
     if(this.characterLevelUps.has(charLevel)){
       return new Error (`Unable to level up, level ${charLevel} already exists.`);
     };
-
-    //validate racial component of newFeat
-
     // validate feat selection
-    if(!validateFeatSelection(this.characterLevelUps, newLevelUpData.feat)){
+    if(!validateFeatSelection(this.characterLevelUps, newLevelUpData.feat, this.race)){
       return new Error('Feat Selection invalid')      
     };
-
     //valiate any bonus feats
     if(newLevelUpData?.bonusFeat){
-      if(!validateFeatSelection(this.characterLevelUps, newLevelUpData.bonusFeat)){
+      if(!validateFeatSelection(this.characterLevelUps, newLevelUpData.bonusFeat, this.race)){
         return new Error('Bonus Feat Selection invalid')   
       };
-    }
-
-
-    // 
-
-    //
-    this.characterLevelUps.set(charLevel, newLevelUpData); // extreme placeholder setter. Lots of validation required.
+    };
+    // Lots more validation required.
+    this.characterLevelUps.set(charLevel, newLevelUpData); 
   };
 
   getLevelInfo(requestedLevel?: number){
@@ -94,13 +86,12 @@ export class MainCharacter implements iCharacter {
     Object.entries(startingStats).map(([key, value]) => {
       //add to total values for temp validation. to be expanded on
       totalValueOfStats += value;
-    })
+    });
 
     //temp validation, must be expanded
     if(totalValueOfStats< 40){
       validStats = false;
-    }
-
+    };
     //return results of stats
     return validStats;
   };
