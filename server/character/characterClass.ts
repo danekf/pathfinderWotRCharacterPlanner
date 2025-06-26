@@ -5,52 +5,13 @@
 // ex:
 // const coolThing: Prettify<interfaceHere> = {};
 
-interface iCharacterStats {
-  Strength: number,
-  Dexterity: number,
-  Constitution: number,
-  Intelligence: number,
-  Wisdom: number,
-  Charisma: number,
-};
+// REMOVE ME
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { iCharacterStats, iFeat, TCharName, TGender, TRace, iCharacter, iCharacterLevel, iMythicLevel } from "./interfaces";
 
-interface iFeat {
-  name: string,
-  preRequisiteFeats? : iFeat[],
-  preRequisiteStats?: iCharacterStats;
-};
+import { validateFeatSelection } from "./featValidation";
 
-type TCharName = {
-  name: string
-}; // attempt to create a type with min and max length of characters, return an error if not met. Might need to be set on frontend, or validated in a separate function within the class however.
-
-type TGender = 'male' | 'female'; //dont hate, thats just how the game is
-type TRace = 'Aasimar' | 'Dhampir' | 'Elf' | 'Gnome' | 'Half-Elf' | 'Half-Orc' | 'Human' | 'Kitsune' | 'Tiefling';
-
-interface iCharacter extends TCharName {
-  level: number,
-  strength: number,
-  dexterity: number,
-  constitution: number,
-  intelligence: number,
-  wisdom: number,
-  charisma: number,
-  gender: TGender,
-  race: TRace,
-};
-
-interface iCharacterLevel {
-  className: string,
-  subclass?: string,
-  feat: iFeat,
-}; // needs to be heavily expanded. Currently just a palceholder to add and map over basic feats.
-
-//PLACEHOLDER
-interface iMythicLevel {
-  stuff: string;
-};
-
-class MainCharacter implements iCharacter {
+export class MainCharacter implements iCharacter {
   //init
   name: string;
   level: number;
@@ -66,8 +27,8 @@ class MainCharacter implements iCharacter {
   charisma = 10;
 
   //map of all character levels, key is the level at which a level of that class was added.
-  levelUps = new Map<number, iCharacterLevel>();
-  mythicLevels = new Map<number, iMythicLevel>();
+  characterLevelUps = new Map<number, iCharacterLevel>();
+  // mythicLevels = new Map<number, iMythicLevel>();
   
   constructor(name:string, startingStats: iCharacterStats, gender: TGender, race: TRace,){
     this.name = name;
@@ -86,24 +47,38 @@ class MainCharacter implements iCharacter {
     };
   };
 
-  levelUp(charLevel:number, levelUpData: iCharacterLevel){
-    if(this.levelUps.has(charLevel)){
-      return `Unable to level up, level ${charLevel} already exists.`;
+  levelUp(charLevel:number, newLevelUpData: iCharacterLevel){
+    //validate level does not already exist
+    if(this.characterLevelUps.has(charLevel)){
+      return new Error (`Unable to level up, level ${charLevel} already exists.`);
     };
 
-    // ADD feat selection, required, on odd levels
+    //validate racial component of newFeat
+
+    // validate feat selection
+    if(!validateFeatSelection(this.characterLevelUps, newLevelUpData.feat)){
+      return new Error('Feat Selection invalid')      
+    };
+
+    //valiate any bonus feats
+    if(newLevelUpData?.bonusFeat){
+      if(!validateFeatSelection(this.characterLevelUps, newLevelUpData.bonusFeat)){
+        return new Error('Bonus Feat Selection invalid')   
+      };
+    }
+
 
     // 
 
     //
-    this.levelUps.set(charLevel, levelUpData); // extreme placeholder setter. Lots of validation required.
+    this.characterLevelUps.set(charLevel, newLevelUpData); // extreme placeholder setter. Lots of validation required.
   };
 
   getLevelInfo(requestedLevel?: number){
     if(requestedLevel){
-      return this.levelUps.get(requestedLevel)
+      return this.characterLevelUps.get(requestedLevel)
     }
-    return this.levelUps
+    return this.characterLevelUps
   };
 
   addFeat(){
@@ -130,22 +105,3 @@ class MainCharacter implements iCharacter {
     return validStats;
   };
 };
-
-const char = new MainCharacter('Bon Jovius',
-  {
-    Strength: 10,
-    Dexterity: 16,
-    Constitution: 18,
-    Intelligence: 10,
-    Wisdom: 10,
-    Charisma: 12,
-  },
-  'male',
-  'Human',
-);
-
-char.levelUp(1,{className: 'Barbarian', feat: {name:'Big shoes'}});
-char.levelUp(2,{className: 'Fighter', subclass: 'Titan Fighter', feat: {name: 'Tiny Feet'}});
-console.log(char.getLevelInfo());
-
-export default MainCharacter;
