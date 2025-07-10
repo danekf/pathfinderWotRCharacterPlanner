@@ -2,9 +2,7 @@
 - SSR
 
 ## Testing
-### Choices
-- Choose testing library for frontend
-- Choose testing library for backend
+Use [Vitest](https://vitest.dev/guide/).
 
 ### Tests to make
 - New Main Character creation
