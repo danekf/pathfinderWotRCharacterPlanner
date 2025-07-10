@@ -7,7 +7,6 @@ export interface iCharacterStats {
   Charisma: number,
 };
 
-
 export type TCharName = {
   name: string
 }; // attempt to create a type with min and max length of characters, return an error if not met. Might need to be set on frontend, or validated in a separate function within the class however.

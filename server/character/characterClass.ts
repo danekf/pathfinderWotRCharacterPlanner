@@ -1,9 +1,3 @@
-// type Prettify<T> = {
-//   [K in keyof T]: T[K];
-// } & {};
-
-// ex:
-// const coolThing: Prettify<interfaceHere> = {};
 
 // REMOVE ME
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -73,6 +67,25 @@ export class MainCharacter implements iCharacter {
     return this.characterLevelUps
   };
 
+  getStatBonuses(): iCharacterStats {
+    // eslint-disable-next-line prefer-const
+    let statBonuses = {
+      Strength: (this.strength -10)/2,
+      Dexterity: (this.dexterity -10)/2,
+      Constitution: (this.constitution -10)/2,
+      Intelligence: (this.intelligence -10)/2,
+      Wisdom:(this.wisdom -10)/2,
+      Charisma:(this.charisma -10)/2,
+    };
+    /*TODO adjust each stat bonus based on gear, when gear is implemented. That is why it is not a const
+    
+    - loop through all equipped gear
+      - if gear has a bonus to stat, compare to current bonuses, and add highest of all unique bonuses
+    */
+
+    return statBonuses;    
+  };
+
   addFeat(){
   };
 
@@ -96,3 +109,5 @@ export class MainCharacter implements iCharacter {
     return validStats;
   };
 };
+
+
