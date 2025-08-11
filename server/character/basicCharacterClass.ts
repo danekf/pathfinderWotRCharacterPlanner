@@ -5,7 +5,7 @@ import { iCharacterStats, iFeat, TCharName, TGender, TRace, iCharacter, iCharact
 
 import { validateFeatSelection } from "./featValidation";
 
-export class MainCharacter implements iCharacter {
+export class BasicCharacter implements iCharacter {
   //init
   name: string;
   level: number;
@@ -19,6 +19,8 @@ export class MainCharacter implements iCharacter {
   intelligence =10;
   wisdom = 10;
   charisma = 10;
+
+  baseAttackBonus=[0];
 
   //map of all character levels, key is the level at which a level of that class was added.
   characterLevelUps = new Map<number, iCharacterLevel>();
@@ -86,8 +88,12 @@ export class MainCharacter implements iCharacter {
     return statBonuses;    
   };
 
-  addFeat(){
+
+  //helper functions for level up
+  private addFeat(){
   };
+
+  private setBaseAttackBonus()
 
   private validateStartingStats(startingStats: iCharacterStats){
     let validStats = true;

@@ -14,6 +14,9 @@ export type TCharName = {
 export type TGender = 'male' | 'female'; //dont hate, thats just how the game is
 export type TRace = 'Aasimar' | 'Dhampir' | 'Elf' | 'Gnome' | 'Half-Elf' | 'Half-Orc' | 'Human' | 'Kitsune' | 'Tiefling';
 
+// bab progression has a specific
+export type BaseAttackBonusProgression = Record<1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20, number[]>;
+
 export interface iFeat {
   name: string,
   preRequisiteFeats? : iFeat,
@@ -31,6 +34,8 @@ export interface iFeat {
   charisma: number,
   gender: TGender,
   race: TRace,
+  baseAttackBonus: number[],
+  baseAttackBonusProgression: BaseAttackBonusProgression,
 };
 
 export interface iCharacterLevel {
