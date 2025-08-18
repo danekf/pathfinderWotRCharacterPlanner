@@ -17,6 +17,7 @@ Use [Vitest](https://vitest.dev/guide/).
     - ~~Add basic racial tag~~
     - Racial bonus to attributes must be handled
     - Add racial traits to a level 0.
+    - Add racial feats to a level 0.
   - ~~Gender~~ 
 
 - Feats (Class)
@@ -30,6 +31,8 @@ Use [Vitest](https://vitest.dev/guide/).
 - Class specific stuff
   - should each class have its own level up helper to avoid having an enormous class? How to handle?
   - could have a separate helper for each class since it gets complex. And then just add the data into the carachter level map?
+
+- create ability to multi class and calculate things such as BaB
 
 - Mythic levels
   - Can be added anytime with no level restriction (except for level 6 required for first mythic?)
