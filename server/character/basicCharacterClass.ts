@@ -1,7 +1,7 @@
 
 // REMOVE ME
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { iCharacterStats, iFeat, TCharName, TGender, TRace, iCharacter, iCharacterLevel, iMythicLevel, BaseAttackBonusProgression, iClass, iSpell } from "./interfaces";
+import { iCharacterStats, iFeat, TCharName, TGender, TRace, iCharacter, iCharacterFeats, iMythicLevel, BaseAttackBonusProgression, iClass, iSpell } from "./interfaces";
 
 import { validateFeatSelection } from "./featValidation";
 import { classSelectorHelper } from "./classes/classSelectorHelper";
@@ -62,7 +62,7 @@ export class MainCharacter implements iCharacter {
   charisma = 10;
   baseAttackBonus=0;
 
-  levelUps = new Map<number, iCharacterLevel>();
+  feats = new Map<number, iCharacterFeats>();
   mythicLevels = new Map<number, iMythicLevel>();
 
   constructor(name: string, gender: TGender, race: TRace, startingStats: iCharacterStats,){
@@ -74,7 +74,6 @@ export class MainCharacter implements iCharacter {
     - []validate stats
     - []caluculate fortitude, reflex, will saving throws
     - []level up to level 1 and apply proper feats, including bonus feats if applicable
-    - []get starting class
 
     */
     if(this.validateStartingStats(startingStats)){
@@ -88,10 +87,13 @@ export class MainCharacter implements iCharacter {
     this.name = name;
     this.gender = gender;
     this.race = race;
+    //add racial bonuses
+    //calculate fort, ref, will
+    this.levelUp()
 
   };
 
-  levelUp(newClass: Lowercase<string>){
+  levelUp(newClass: Lowercase<string>, baseFeat?: iFeat, bonusFeat?: iFeat){
     /*level up should 
     - [X]take in new class to level up in 
     - [X]check if level in class exists
@@ -103,40 +105,43 @@ export class MainCharacter implements iCharacter {
     */
    
     this.level+= 1;    
-    //if the current level is divisible by 2
-    if(this.level % 2 !== 0){
-      this.addFeat(this.level);
+    //if the current level is not divisible by 2 (ie 1,3,5, etc...), then we need to add a feat
+    if(this.level % 2 !== 0 && baseFeat){
+      try{
+        this.addFeat(this.level, baseFeat);
+      } catch(error){
+        this.removeLevelUp();
+        throw new Error(error);
+
+      }
+    } else if(this.level % 2 !== 0 && !baseFeat){
+        this.removeLevelUp();
+        throw new Error("Required level up feat is missing");
     };
 
     /*check to see if character has a level in the requested class already.
       - if so, level up using that classes level up function
       - if not, attempt to add class via the helper function
     */
-    let hasClass = false;    
+    let charHasClass = false;    
     for(const characterClass of this.classes) {
       if(newClass === characterClass.name){
-        hasClass = true;
+        charHasClass = true;
         characterClass.levelUp()
       };
     };
-
-    if(!hasClass){
+    if(!charHasClass){
       //if the class is a valid option, add the first level to the classes for this character.
       try {
         const classToAdd = classSelectorHelper(newClass);
         this.classes.push(classToAdd);
       } catch(error){
+          this.removeLevelUp();
           throw new Error(error)
         };
      };
   };
   
-  getLevelInfo(requestedLevel?: number){
-    if(requestedLevel){
-      return this.levelUps.get(requestedLevel)
-    }
-    return this.levelUps
-  };
 
   getStatBonuses(): iCharacterStats {
     // eslint-disable-next-line prefer-const
@@ -153,20 +158,40 @@ export class MainCharacter implements iCharacter {
     - loop through all equipped gear
       - if gear has a bonus to stat, compare to current bonuses, and add highest of all unique bonuses
     */
-
     return statBonuses;    
   };
 
-
   //helper functions for level up
-  private addFeat(level: number){
+  private addFeat(level: number, featToAdd: iFeat, isBonusfeat?: boolean){
     /*
       Add feat should :
-      - []take in level to add feat to
-        -[]should be current level
-      - []feat to add
-        -[]double check all prerequisites
+      - [X]take in level to add feat to
+        -[X]should be current level
+      - [X]take in feat to add
+      -[] check all prerequisites for feat before adding
+      - [X]if all is good, add to levelUps map 
+        -- handled by throwing an exception during "checkPrerequisitesForFeat.If any exception is raised, the parent calling addFeat will run "removeLevelUp" to cancel out that level
+      - throw error if there are issues. addFeat is used in tryCatch blocks, so just throw when there is a problem.
     */
+    if(level !== this.level){
+      throw ("Invalid level for feat, not current level. Please remove levels or correct input level and try again.")
+    };
+
+    this.checkPrerequisitesForFeat(featToAdd);
+ 
+    //account for bonus feats by not overriding level if it exists
+    let currentLevelFeats: iCharacterFeats = {};
+    if(this.feats.get(level)){
+      /* @ts-expect-error unsure why this is giving an error, it is checking to see if it is undefined, and if it is not then assign its current value to the temp variable. Ignore next line not working. While TS expect error suppreses it.*/
+      currentLevelFeats = this.feats.get(level);
+    };
+
+    if(isBonusfeat){
+      currentLevelFeats = {...currentLevelFeats, bonusFeat: featToAdd};
+    }else{
+      currentLevelFeats = {...currentLevelFeats, feat: featToAdd};
+    };
+    this.feats.set(level, currentLevelFeats);
 
   };
 
@@ -177,6 +202,16 @@ export class MainCharacter implements iCharacter {
       It should:
       - [] remove all data for the latest level up
     */
+  };
+
+  private checkPrerequisitesForFeat(feat: iFeat){
+    /*
+      Should :
+        - []be able to check prerequisites for feats using what already exists.
+        - []check all levels for requirements, including subClasses
+        - []throw proper error if there is one. 
+    */
+
   };
 
   private calculateCmbAndCmd(){

@@ -12,6 +12,6 @@ export const classSelectorHelper = (classToFind: Lowercase<string>): iClass => {
     case "chirugeon":
       return new Chirugeon;
     default:
-      return new Error(`${classToFind} class not yet implemented or does not exist`);
+      throw`${classToFind} class not yet implemented or does not exist`;
   };  
 };

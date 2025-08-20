@@ -80,13 +80,10 @@ export interface iClass {
   addSpell(): void,
 };
 
-export interface iCharacterLevel {
-  // className: string,
-  // subclass?: string,
-  feat: iFeat,
+export interface iCharacterFeats {
+  feat?: iFeat,
   bonusFeat?: iFeat,
-
-}; // needs to be heavily expanded. Currently just a palceholder to add and map over basic feats.
+};
 
 //PLACEHOLDER
 export interface iMythicLevel {
