@@ -29,8 +29,7 @@ Use [Vitest](https://vitest.dev/guide/).
   - remove (enforce correct type of map) 'any' type input from "validateFeatSelection" and "hasPrerequisiteFeat"
 
 - Class specific stuff
-  - should each class have its own level up helper to avoid having an enormous class? How to handle?
-  - could have a separate helper for each class since it gets complex. And then just add the data into the carachter level map?
+  - separate class for Prestige class
 
 - create ability to multi class and calculate things such as BaB
 
