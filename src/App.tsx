@@ -12,15 +12,16 @@ function App() {
  
 
   return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/characters' element={<Character/>} />
-      <Route path='/characters/new' element={<CreateCharacter/>} />
+    <Home />
+    // <Routes>
+    //   <Route path='/' element={<Home />} />
+    //   <Route path='/characters' element={<Character/>} />
+    //   <Route path='/characters/new' element={<CreateCharacter/>} />
 
 
 
-      <Route path='*' element={<Page404 />} />
-    </Routes>
+    //   <Route path='*' element={<Page404 />} />
+    // </Routes>
   );
 }
 
