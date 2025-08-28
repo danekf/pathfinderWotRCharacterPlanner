@@ -1,3 +1,4 @@
+
 import {
   Drawer,
   DrawerHeader,
@@ -11,7 +12,6 @@ import {
 import { useState } from "react";
 
 import CurrentCharacterProgression from "./currentCharacterProgression/currentCharacterProgression";
-
 
 export function Menu() {
   const [isOpen, setIsOpen] = useState(false);

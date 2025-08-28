@@ -3,10 +3,10 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css'
 
 //page imports
-import Home from './pages/Home/home';
-import Page404 from './pages/404/404';
-import Character from './pages/Character/Character';
-import CreateCharacter from './pages/Character/CreateCharacter/CreateCharacter';
+import Home from './components/pages/Home/home';
+// import Page404 from './components/pages/404/404';
+// import Character from './components/pages/Character/Character';
+// import CreateCharacter from './components/pages/Character/CreateCharacter/CreateCharacter';
 
 function App() {
  
