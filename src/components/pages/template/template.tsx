@@ -1,13 +1,12 @@
-
 import BaseLayout from "../../layouts/BaseLayout";
 
-export const Page404 = () => {
+export const Template = () => {
   return(
     <BaseLayout>
       <div className="content flex justify-center">
-        <h1>Page Not Found</h1>
+        
       </div>
     </BaseLayout>
   );
 };
-
+      

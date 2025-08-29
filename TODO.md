@@ -24,7 +24,7 @@ Use [Vitest](https://vitest.dev/guide/).
   - feats can only be chosen from a set list (validation)
     - remove "Any from feat validation input"
     - add specific error message for failure condition
-  - Ensure dependencies exist
+  - Ensure dependencies existP
   - Add feat every other char level
   - remove (enforce correct type of map) 'any' type input from "validateFeatSelection" and "hasPrerequisiteFeat"
 
@@ -40,3 +40,12 @@ Use [Vitest](https://vitest.dev/guide/).
 
 - Spells
   - A whole lot of stuff to do here. Tackle after rest is implemented as spell selection depends on so many things. Including class, subclass, domains, and more stuff.
+  
+
+## Frontend Stuff
+- Fix viewport stuff since adding SSR
+  - menu bar and child are not scaling properly in the baseLayout (or if we dont use it as well, something is off)
+
+- Router v7 updates (followed v6 guide to start)
+  - static routes missing on entry server
+  - [v7 tutorial](https://www.youtube.com/watch?v=h7MTWLv3xvw) to follow? 

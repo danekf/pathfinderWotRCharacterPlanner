@@ -12,7 +12,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({children}) => {
   return(
   <>
     <Menu />
-    <section className='pages'>{children}</section>
+    <section className='pages min-w-screen min-h-[calc(100dvh-32px)] '>{children}</section>
   </>)
 };
 

@@ -6,7 +6,9 @@ export const Home = () => {
 
   return(
     <BaseLayout >
-      <h1>Home</h1>
+      <div className="content flex justify-center">
+        <h1>Home</h1>
+      </div>
     </BaseLayout>
   )
 };

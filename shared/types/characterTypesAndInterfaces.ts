@@ -11,14 +11,14 @@ type TsidedDice = 4 | 6 | 8 | 10 | 12 | 20;
 
 export type TCharName = {
   name: string
-}; // attempt to create a type with min and max length of characters, return an error if not met. Might need to be set on frontend, or validated in a separate function within the class however.
+}; // TODO attempt to create a type with min and max length of characters, return an error if not met. Might need to be set on frontend, or validated in a separate function within the class however.
 
 export type TGender = 'male' | 'female'; //dont hate, thats just how the game is
 export type TRace = 'Aasimar' | 'Dhampir' | 'Elf' | 'Gnome' | 'Half-Elf' | 'Half-Orc' | 'Human' | 'Kitsune' | 'Tiefling';
 export type TCasterType = 'Spontaneous' | 'Memorized';
 export type TSpellSchool = "Conjuration"| "Evocation" |"Abjuration" | "Necromancy" | "Enchantment" |"Illusion" | "Transmutation" | "Divination" | "Elemental";
 export type TSpellTargetSelector = "Personal" | "Enemies" | "Enemies in Area Of Effect" | "Target" | "Target Area Of Effect";
-export type TMetamagic = "PLACEHOLDER"; //calculate changes to spells on the frontend, not backend but list the applied metamagics here.
+export type TMetamagic = "PLACEHOLDER"; // calculate changes to spells on the frontend, not backend but list the applied metamagics here.
 
 export interface iSpell {
   spellName: string,
@@ -35,7 +35,7 @@ export interface iSpell {
   */
 };
 
-// bab progression has a specific
+//* bab progression has a specific 
 export type BaseAttackBonusProgression = Record<1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20, number>;
 
 export interface iFeat {
