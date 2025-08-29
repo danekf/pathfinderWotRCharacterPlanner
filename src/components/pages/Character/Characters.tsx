@@ -2,9 +2,10 @@ import { TabItem,Tabs } from "flowbite-react";
 import BaseLayout from "../../layouts/BaseLayout";
 import { useEffect, useState } from "react";
 import { CreateCharacter } from "./CreateCharacter/CreateCharacter";
+import { ShowCharacter } from "./showCharacter/ShowCharacter";
 
 
-//TODO use type from backend, this is placeholder
+//TODO use interface from backend, this is placeholder
 interface Character {
   name: string
 };
@@ -15,28 +16,25 @@ export const Characters = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
 
   useEffect(()=>{
-    //TODO fetch characters from backend
-    setCharacters([{name: "Jhonny do good"},
+    /*
+    TODO 
+
+    [] fetch characters from backend
+    [] Validate character conforms to interface
+    [] setCharacters data to state
+    */
+    setCharacters([{name: "Trazyn The Infinite"},
     {name: "Lotara"}])
   },[])
- 
-  {characters.map((character: Character)=>{
-    return(
-      <li key={character.name}>
-        {character.name}
-      </li>
-    )
-  })}
-  <a href='/characters/new'>+New</a>
- 
+  
   return(
     <BaseLayout>
-      <div className="content flex flex-col items-center ">
-        <Tabs aria-label="character Tabs" variant="default">
+      <div className="content flex flex-col items-center">
+        <Tabs aria-label="character Tabs" variant="fullWidth">
           {characters.map((character)=>{
             return(
               <TabItem title={character.name}>
-                {character.name}
+                <ShowCharacter character={character} />
               </TabItem>
             )
           })}
@@ -44,7 +42,6 @@ export const Characters = () => {
             <CreateCharacter />
           </TabItem>
         </Tabs>
-
       </div>
     </BaseLayout>
   );

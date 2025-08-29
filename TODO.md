@@ -24,9 +24,10 @@ Use [Vitest](https://vitest.dev/guide/).
   - feats can only be chosen from a set list (validation)
     - remove "Any from feat validation input"
     - add specific error message for failure condition
-  - Ensure dependencies existP
+  - Ensure dependencies exist
   - Add feat every other char level
   - remove (enforce correct type of map) 'any' type input from "validateFeatSelection" and "hasPrerequisiteFeat"
+  - should show a placeholder text for pregression along a character class, and then be replaced when something is chosen
 
 - Class specific stuff
   - separate class for Prestige class
@@ -49,3 +50,5 @@ Use [Vitest](https://vitest.dev/guide/).
 - Router v7 updates (followed v6 guide to start)
   - static routes missing on entry server
   - [v7 tutorial](https://www.youtube.com/watch?v=h7MTWLv3xvw) to follow? 
+
+- Theme (brown and canvas like in WoTR character creator)
