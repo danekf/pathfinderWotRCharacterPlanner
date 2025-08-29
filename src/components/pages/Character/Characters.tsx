@@ -1,6 +1,7 @@
-
+import { TabItem,Tabs } from "flowbite-react";
 import BaseLayout from "../../layouts/BaseLayout";
 import { useEffect, useState } from "react";
+import { CreateCharacter } from "./CreateCharacter/CreateCharacter";
 
 
 //TODO use type from backend, this is placeholder
@@ -19,22 +20,31 @@ export const Characters = () => {
     {name: "Lotara"}])
   },[])
  
-  //TODO the line items should be flowbite tabs instead which shows the character details when clicked.
+  {characters.map((character: Character)=>{
+    return(
+      <li key={character.name}>
+        {character.name}
+      </li>
+    )
+  })}
+  <a href='/characters/new'>+New</a>
+ 
   return(
     <BaseLayout>
       <div className="content flex flex-col items-center ">
-        {characters && 
-          <ul>
-            {characters.map((character: Character)=>{
-              return(
-                <li key={character.name}>
-                  {character.name}
-                </li>
-              )
-            })}
-          <a href='/characters/new'>+New</a>
-          </ul>        
-        }
+        <Tabs aria-label="character Tabs" variant="default">
+          {characters.map((character)=>{
+            return(
+              <TabItem title={character.name}>
+                {character.name}
+              </TabItem>
+            )
+          })}
+          <TabItem title="+ New character">
+            <CreateCharacter />
+          </TabItem>
+        </Tabs>
+
       </div>
     </BaseLayout>
   );

@@ -11,7 +11,7 @@ type TsidedDice = 4 | 6 | 8 | 10 | 12 | 20;
 
 export type TCharName = {
   name: string
-}; // TODO attempt to create a type with min and max length of characters, return an error if not met. Might need to be set on frontend, or validated in a separate function within the class however.
+}; // ! TODO attempt to create a type with min and max length of characters, return an error if not met. Might need to be set on frontend, or validated in a separate function within the class however.
 
 export type TGender = 'male' | 'female'; //dont hate, thats just how the game is
 export type TRace = 'Aasimar' | 'Dhampir' | 'Elf' | 'Gnome' | 'Half-Elf' | 'Half-Orc' | 'Human' | 'Kitsune' | 'Tiefling';

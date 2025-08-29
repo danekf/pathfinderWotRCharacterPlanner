@@ -5,6 +5,8 @@ interface Character {
   name: string
 };
 
+/* This component show all the current stats of a chosen character. Will be a flowbite tab and can be swapped between easily to show details of all currently created characters. */
+
 export const ShowCharacter = (character: Character) => {
   return(
     <BaseLayout>
