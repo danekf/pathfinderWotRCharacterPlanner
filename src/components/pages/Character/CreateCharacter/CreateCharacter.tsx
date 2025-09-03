@@ -6,11 +6,9 @@ import CurrentCharacterProgression from "../currentCharacterProgression/currentC
   [] modal for "currentCharacterProgression"
     ?using another flowbite tab
   []
-
 */
 
 export const CreateCharacter = () => {
-
   const [characterData, setCharacterData] = useState({name: "Trazyn The Infinite 2"});
 
   /*
@@ -23,7 +21,6 @@ export const CreateCharacter = () => {
   const clickSave = () => {   
     location.reload();
   };
-
 
   return(
       <div className="content flex flex-col items-center gap-8">

@@ -7,7 +7,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 //app level imports
 import { Router } from './components/router/router';
-
 import "./index.css";
 
 ReactDom.hydrateRoot(
