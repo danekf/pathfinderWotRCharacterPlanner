@@ -1,7 +1,19 @@
 
 // REMOVE ME
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { iCharacterStats, iFeat, TCharName, TGender, TRace, iCharacter, iCharacterFeats, iMythicLevel, BaseAttackBonusProgression, iClass, iSpell } from "./interfaces";
+import {
+  iCharacterStats,
+  iFeat,
+  TCharName,
+  TGender,
+  TRace,
+  iCharacter,
+  iCharacterFeats,
+  iMythicLevel,
+  BaseAttackBonusProgression,
+  iClass,
+  iSpell,
+} from "../../shared/types/characterTypesAndInterfaces";
 
 import { validateFeatSelection } from "./featValidation";
 import { classSelectorHelper } from "./classes/classSelectorHelper";
@@ -97,6 +109,8 @@ export class MainCharacter implements iCharacter {
     /*
     level up should 
       [X] take in new class to level up in 
+        [X] As string
+        ![] As class (This is the better design, setup as the strategy design principle)
       [X] check if level in class exists
       [] check requirements for class and compare to requirements (in the case of prestige class)
       [] add new levelUp data to levelUpsMap
@@ -231,12 +245,15 @@ export class MainCharacter implements iCharacter {
   private validateStartingStats(startingStats: iCharacterStats){
     let validStats = true;
     //do stuff and test
-    let totalValueOfStats = 0;
+    let totalValueOfStats: number = 0;
 
     // Stop TS from complaining about no unused variable
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(startingStats).map(([key, value]) => {
-      //add to total values for temp validation. to be expanded on
+      /*
+        TODO
+        [] add to total values for temp validation. to be expanded on and properly types
+      */
       totalValueOfStats += value;
     });
 

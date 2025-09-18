@@ -4,11 +4,13 @@ import { MainCharacterService } from './main-character.service';
 import { CreateMainCharacterDto } from './dto/create-main-character.dto';
 import { UpdateMainCharacterDto } from './dto/update-main-character.dto';
 
+// noob reminder "/maincharacter route"
 @Controller('maincharacter')
 export class MainCharacterController {
   constructor(private readonly mainCharacterService: MainCharacterService) {}
 
-  @Post()
+  //noob reminder "/maincharacter/new"
+  @Post('new')
   create(@Body() createMainCharacterDto: CreateMainCharacterDto) {
     return this.mainCharacterService.create(createMainCharacterDto);
   }
@@ -18,6 +20,7 @@ export class MainCharacterController {
     return this.mainCharacterService.findAll();
   }
 
+  // noob reminder "/maincharacter:id"
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.mainCharacterService.findOne(+id);
