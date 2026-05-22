@@ -1,4 +1,4 @@
-export interface iCharacterStats {
+export interface iCharacterAttributes {
   Strength: number,
   Dexterity: number,
   Constitution: number,
@@ -41,7 +41,7 @@ export type BaseAttackBonusProgression = Record<1|2|3|4|5|6|7|8|9|10|11|12|13|14
 export interface iFeat {
   name: string,
   preRequisiteFeats? : iFeat,
-  preRequisiteStats?: iCharacterStats;
+  preRequisiteStats?: iCharacterAttributes;
   preRequisiteRace?: TRace;
 };
 

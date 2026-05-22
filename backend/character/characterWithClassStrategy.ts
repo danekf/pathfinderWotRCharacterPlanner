@@ -5,19 +5,19 @@ interface classStrategy {
   addLevelOf(): void;
 }
 
-interface characterType {
+interface characterStrategy {
   pointsToSpendAtCreation: number;
   validateStartingStats(startingStats: iCharacterStats): boolean;
 }
 
-class MainCharacter implements characterType {
+class MainCharacter implements characterStrategy {
   pointsToSpendAtCreation: 25;
   validateStartingStats(startingStats: iCharacterStats): boolean {
     //TODO - Calculate validity of stats
     return true;
   }
 }
-class MercenaryCharacter implements characterType {
+class MercenaryCharacter implements characterStrategy {
   pointsToSpendAtCreation: 15;
   validateStartingStats(startingStats: iCharacterStats): boolean {
     //TODO - Calculate validity of stats
@@ -39,17 +39,15 @@ class Character implements iCharacterStats {
   Intelligence: number;
   Wisdom: number;
   Charisma: number;
-  /*
-  TODO
-    [] Different starting stats/points for a main character vs a merc
-      [] As a strategy in constructor to differentiate. 
-  */
+  Level: number;
+
   constructor(
     name: string,
-    characterType: characterType,
+    characterType: characterStrategy,
     startingStats: iCharacterStats,
   ) {
     this.name = name;
+    this.Level = 0;
     if (characterType.validateStartingStats(startingStats)) {
       this.Strength = startingStats.Strength;
       this.Dexterity = startingStats.Dexterity;

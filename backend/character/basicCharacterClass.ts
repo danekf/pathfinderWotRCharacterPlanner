@@ -2,7 +2,7 @@
 // REMOVE ME
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
-  iCharacterStats,
+  iCharacterAttributes,
   iFeat,
   TCharName,
   TGender,
@@ -77,7 +77,7 @@ export class MainCharacter implements iCharacter {
   feats = new Map<number, iCharacterFeats>();
   mythicLevels = new Map<number, iMythicLevel>();
 
-  constructor(name: string, gender: TGender, race: TRace, startingStats: iCharacterStats,){
+  constructor(name: string, gender: TGender, race: TRace, startingStats: iCharacterAttributes,){
     /*
     [X]get name
     [X]get gender
@@ -161,7 +161,7 @@ export class MainCharacter implements iCharacter {
   };
   
 
-  getStatBonuses(): iCharacterStats {
+  getStatBonuses(): iCharacterAttributes {
     // eslint-disable-next-line prefer-const
     let statBonuses = {
       Strength: (this.strength -10)/2,
@@ -242,7 +242,7 @@ export class MainCharacter implements iCharacter {
     */
   };
 
-  private validateStartingStats(startingStats: iCharacterStats){
+  private validateStartingStats(startingStats: iCharacterAttributes){
     let validStats = true;
     //do stuff and test
     let totalValueOfStats: number = 0;
